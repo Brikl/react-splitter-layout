@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from './Pane';
 
+try {
+  if (window === `undefined`) {
+    return false;
+  }
+} catch (error) {}
+
 function clearSelection() {
   if (document.body.createTextRange) {
     // https://github.com/zesik/react-splitter-layout/issues/16
