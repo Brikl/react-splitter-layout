@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from './Pane';
 
-try {
-  if (window === `undefined`) {
-    return false;
-  }
-} catch (error) {}
-
 function clearSelection() {
+
+  try {
+    if (window === `undefined`) {
+      return false;
+    }
+  } catch (error) {}
+
   if (document.body.createTextRange) {
     // https://github.com/zesik/react-splitter-layout/issues/16
     // https://stackoverflow.com/questions/22914075/#37580789
@@ -30,6 +31,13 @@ const DEFAULT_SPLITTER_SIZE = 4;
 
 class SplitterLayout extends React.Component {
   constructor(props) {
+
+    try {
+      if (window === `undefined`) {
+        return false;
+      }
+    } catch (error) {}
+    
     super(props);
     this.handleResize = this.handleResize.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
