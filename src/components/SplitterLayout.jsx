@@ -5,25 +5,27 @@ import Pane from './Pane';
 function clearSelection() {
 
   try {
-    if (window === `undefined`) {
-      return false;
-    }
-  } catch (error) {}
 
-  if (document.body.createTextRange) {
-    // https://github.com/zesik/react-splitter-layout/issues/16
-    // https://stackoverflow.com/questions/22914075/#37580789
-    const range = document.body.createTextRange();
-    range.collapse();
-    range.select();
-  } else if (window.getSelection) {
-    if (window.getSelection().empty) {
-      window.getSelection().empty();
-    } else if (window.getSelection().removeAllRanges) {
-      window.getSelection().removeAllRanges();
+    if (document.body.createTextRange) {
+      // https://github.com/zesik/react-splitter-layout/issues/16
+      // https://stackoverflow.com/questions/22914075/#37580789
+      const range = document.body.createTextRange();
+      range.collapse();
+      range.select();
+    } else if (window.getSelection) {
+      if (window.getSelection().empty) {
+        window.getSelection().empty();
+      } else if (window.getSelection().removeAllRanges) {
+        window.getSelection().removeAllRanges();
+      }
+    } else if (document.selection) {
+      document.selection.empty();
     }
-  } else if (document.selection) {
-    document.selection.empty();
+
+  }
+  catch(e) {
+    // statements
+    console.log(e);
   }
 }
 
@@ -31,12 +33,6 @@ const DEFAULT_SPLITTER_SIZE = 4;
 
 class SplitterLayout extends React.Component {
   constructor(props) {
-
-    try {
-      if (window === `undefined`) {
-        return false;
-      }
-    } catch (error) {}
     
     super(props);
     this.handleResize = this.handleResize.bind(this);
@@ -51,30 +47,40 @@ class SplitterLayout extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-    document.addEventListener('mouseup', this.handleMouseUp);
-    document.addEventListener('mousemove', this.handleMouseMove);
-    document.addEventListener('touchend', this.handleMouseUp);
-    document.addEventListener('touchmove', this.handleTouchMove);
 
-    let secondaryPaneSize;
-    if (typeof this.props.secondaryInitialSize !== 'undefined') {
-      secondaryPaneSize = this.props.secondaryInitialSize;
-    } else {
-      const containerRect = this.container.getBoundingClientRect();
-      let splitterRect;
-      if (this.splitter) {
-        splitterRect = this.splitter.getBoundingClientRect();
+    try {
+
+      window.addEventListener('resize', this.handleResize);
+      document.addEventListener('mouseup', this.handleMouseUp);
+      document.addEventListener('mousemove', this.handleMouseMove);
+      document.addEventListener('touchend', this.handleMouseUp);
+      document.addEventListener('touchmove', this.handleTouchMove);
+
+      let secondaryPaneSize;
+      if (typeof this.props.secondaryInitialSize !== 'undefined') {
+        secondaryPaneSize = this.props.secondaryInitialSize;
       } else {
-        // Simulate a splitter
-        splitterRect = { width: DEFAULT_SPLITTER_SIZE, height: DEFAULT_SPLITTER_SIZE };
+        const containerRect = this.container.getBoundingClientRect();
+        let splitterRect;
+        if (this.splitter) {
+          splitterRect = this.splitter.getBoundingClientRect();
+        } else {
+          // Simulate a splitter
+          splitterRect = { width: DEFAULT_SPLITTER_SIZE, height: DEFAULT_SPLITTER_SIZE };
+        }
+        secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
+          left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
+          top: containerRect.top + ((containerRect.height - splitterRect.height) / 2)
+        }, false);
       }
-      secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
-        top: containerRect.top + ((containerRect.height - splitterRect.height) / 2)
-      }, false);
+      this.setState({ secondaryPaneSize });
+
     }
-    this.setState({ secondaryPaneSize });
+    catch(e) {
+      // statements
+      console.log(e);
+    }
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,11 +99,20 @@ class SplitterLayout extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-    document.removeEventListener('mouseup', this.handleMouseUp);
-    document.removeEventListener('mousemove', this.handleMouseMove);
-    document.removeEventListener('touchend', this.handleMouseUp);
-    document.removeEventListener('touchmove', this.handleTouchMove);
+
+    try {
+
+      window.removeEventListener('resize', this.handleResize);
+      document.removeEventListener('mouseup', this.handleMouseUp);
+      document.removeEventListener('mousemove', this.handleMouseMove);
+      document.removeEventListener('touchend', this.handleMouseUp);
+      document.removeEventListener('touchmove', this.handleTouchMove);
+
+    }
+    catch(e) {
+      // statements
+      console.log(e);
+    }
   }
 
   getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
