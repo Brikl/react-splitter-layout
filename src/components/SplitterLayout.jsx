@@ -4,9 +4,6 @@ import Pane from './Pane';
 
 if (typeof window === 'undefined') {
 
-  return false;
-}
-
 function clearSelection() {
 
   try {
@@ -290,5 +287,7 @@ SplitterLayout.defaultProps = {
   onSecondaryPaneSizeChange: null,
   children: []
 };
+
+}
 
 export default SplitterLayout;
