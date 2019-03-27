@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from './Pane';
 
-if (typeof window !== 'undefined') {
-
 function clearSelection() {
 
   try {
@@ -287,7 +285,5 @@ SplitterLayout.defaultProps = {
   onSecondaryPaneSizeChange: null,
   children: []
 };
-
-}
 
 export default SplitterLayout;
