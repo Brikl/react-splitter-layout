@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from './Pane';
 
-if (typeof window === 'undefined') {
+if (typeof window !== 'undefined') {
 
 function clearSelection() {
 
