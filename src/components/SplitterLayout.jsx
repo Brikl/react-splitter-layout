@@ -12,11 +12,11 @@ function clearSelection() {
       const range = document.body.createTextRange();
       range.collapse();
       range.select();
-    } else if (window.getSelection) {
-      if (window.getSelection().empty) {
-        window.getSelection().empty();
-      } else if (window.getSelection().removeAllRanges) {
-        window.getSelection().removeAllRanges();
+    } else if (document.getSelection) {
+      if (document.getSelection().empty) {
+        document.getSelection().empty();
+      } else if (document.getSelection().removeAllRanges) {
+        document.getSelection().removeAllRanges();
       }
     } else if (document.selection) {
       document.selection.empty();
@@ -50,7 +50,7 @@ class SplitterLayout extends React.Component {
 
     try {
 
-      window.addEventListener('resize', this.handleResize);
+      document.addEventListener('resize', this.handleResize);
       document.addEventListener('mouseup', this.handleMouseUp);
       document.addEventListener('mousemove', this.handleMouseMove);
       document.addEventListener('touchend', this.handleMouseUp);
@@ -102,7 +102,7 @@ class SplitterLayout extends React.Component {
 
     try {
 
-      window.removeEventListener('resize', this.handleResize);
+      document.removeEventListener('resize', this.handleResize);
       document.removeEventListener('mouseup', this.handleMouseUp);
       document.removeEventListener('mousemove', this.handleMouseMove);
       document.removeEventListener('touchend', this.handleMouseUp);
