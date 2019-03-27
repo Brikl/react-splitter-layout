@@ -23,12 +23,6 @@ $ npm install --save react-splitter-layout
 
 ## Testing
 
-To start example server, execute `example` script with `npm`.
-
-```sh
-$ npm run example
-```
-
 To run tests, execute `test` command with `npm`.
 
 ```sh
@@ -54,7 +48,6 @@ $ npm run coverage
     ```javascript
     import React from 'react';
     import SplitterLayout from 'react-splitter-layout';
-    import 'react-splitter-layout/lib/index.css';
 
     class YourComponent extends React.Component {
       render() {
@@ -69,8 +62,6 @@ $ npm run coverage
 
     export default YourComponent;
     ```
-
-*Note: From version 4.0.0, you need to import CSS files or handle it in your favorite way explicitly.*
 
 ## Usage
 
@@ -146,8 +137,6 @@ The `SplitterLayout` component supports the following props.
 
 ## Release History
 
-* 4.0.0
-  * Stylesheets are no longer integrated by default. It has to be handled in your favorite way explicitly.
 * 3.0.0
   * Add dragging and size change events.
   * Drop support of React earlier than 15.5.0.
